@@ -1,0 +1,14 @@
+tool: complexipy
+version: "cognitive-ast"
+language: python
+language_version: "3.9"
+technique: "Readability / Maintainability"
+classification: "Cognitive Complexity"
+target_files:
+  - complexity_sample.py
+run:
+  command: "bash run_complexipy.sh"
+requirements:
+  - complexipy>=1.0.0
+expects:
+  - cognitive_complexity_score_gt_threshold: true
