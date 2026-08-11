@@ -24,13 +24,13 @@ Targets Django 3.2 LTS.
   `management/commands/mine_history.py` (a real
   `python manage.py mine_history` command and pydriller's actual
   trigger source), and a deliberately partial `tests/` suite.
-- `quality/<tool>/` — one folder per tool available for Python 3.8 in
-  [Golden_Repo_Lite](https://github.com/testable-platform/Golden_Repo_Lite/tree/python/Python_3.8)
-  (4 total, matching that repo's Python_3.8 folder exactly - drops
-  `beniget`/`jscpd` and adds `cognitive-ast`/`crosshair`/`radon-lizard`
-  versus the 3.7 branch): `cognitive-ast`, `crosshair`, `pydriller`,
-  `radon-lizard`. Each holds `trigger.yaml` + `README.md` pointing at
-  the real project code above.
+- `quality/<tool>/` — all 14 tools from
+  [Golden_Repo_Lite](https://github.com/testable-platform/Golden_Repo_Lite/tree/python)
+  (not just the 4 that repo's own Python_3.8 folder lists): `beniget`,
+  `cognitive-ast`, `cosmic-ray`, `coverage-py`, `coverage-py-beniget`,
+  `crosshair`, `jscpd`, `pip-audit`, `pydriller`, `pylint`, `pymcdc`,
+  `radon-lizard`, `semgrep-bandit`, `testmon`. Each holds `trigger.yaml`
+  + `README.md` pointing at the real project code above.
 
 ## Build everything with one command
 
