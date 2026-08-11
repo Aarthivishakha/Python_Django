@@ -1,4 +1,4 @@
-"""Django settings for the PYTHON_3.13 golden-repo fixture project."""
+"""Django settings for the PYTHON_3.14 golden-repo fixture project."""
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent

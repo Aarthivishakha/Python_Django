@@ -1,7 +1,7 @@
 tool: "semgrep+bandit"
 version: "semgrep 1.172.0 / bandit 1.8.3"
 language: python
-language_version: "3.13"
+language_version: "3.14"
 technique: "Security White-box Testing (SAST)"
 classification: "Secure Coding Validation"
 target_files:

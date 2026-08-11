@@ -1,0 +1,15 @@
+tool: "radon+lizard"
+version: "radon 6.0.1 / lizard 1.17.10"
+language: python
+language_version: "3.14"
+technique: "Structural Analysis Metric"
+classification: "Cyclomatic Complexity"
+target_files:
+  - ../../catalog/pricing.py
+run:
+  command: "radon cc catalog/pricing.py -s -a && lizard catalog/pricing.py"
+requirements:
+  - radon==6.0.1
+  - lizard==1.17.10
+expects:
+  cyclomatic_complexity_gt_1: true

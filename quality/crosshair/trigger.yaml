@@ -1,7 +1,7 @@
 tool: crosshair
 version: "0.0.109"
 language: python
-language_version: "3.13"
+language_version: "3.14"
 technique: "Static Analysis Metric"
 classification: "Execution Path Integrity"
 target_files:

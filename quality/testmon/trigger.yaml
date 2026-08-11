@@ -1,7 +1,7 @@
 tool: testmon
 version: "pytest-testmon 2.2.0"
 language: python
-language_version: "3.13"
+language_version: "3.14"
 technique: "Test Prioritization"
 classification: "QA Resource Allocation"
 target_files:
