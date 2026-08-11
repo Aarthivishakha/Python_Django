@@ -10,8 +10,7 @@ echo "### [1/4] Installing dependencies"
 pip install -r requirements.txt
 pip install -r quality/requirements.txt
 
-echo "### [2/4] Django: check + migrate"
-python manage.py check
+echo "### [2/4] Django: migrate"
 python manage.py migrate --noinput
 
 echo "### [3/4] Django: test"

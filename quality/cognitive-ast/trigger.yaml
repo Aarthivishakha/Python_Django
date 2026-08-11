@@ -1,0 +1,14 @@
+tool: complexipy
+version: "cognitive-ast"
+language: python
+language_version: "3.8"
+technique: "Readability / Maintainability"
+classification: "Cognitive Complexity"
+target_files:
+  - ../../catalog/pricing.py
+run:
+  command: "complexipy catalog/pricing.py"
+requirements:
+  - complexipy>=1.0.0
+expects:
+  cognitive_complexity_score_reported: true

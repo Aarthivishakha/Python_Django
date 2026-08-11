@@ -1,7 +1,7 @@
-# crosshair — Python 3.13
+# crosshair — Python 3.8
 
 Symbolically checks `catalog/pricing.py::calculate_order_total` against
-the pre/post contracts already in its docstring.
+its real input-validation invariants.
 
 Run from repo root:
 
