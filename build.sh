@@ -1,25 +1,31 @@
 #!/usr/bin/env bash
-# Single build entry point for this branch: builds/verifies the Django
-# project AND the tools/ suite (both against their own fixtures and against
-# the real app code) as one unit. Exits non-zero on any failure.
+# Single build entry point: installs deps, builds/tests the real Django
+# project (catalog/), then triggers every tool in quality/ against that
+# same real project code. Exits non-zero on any failure.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 cd "$ROOT"
 
-echo "### [1/5] Installing dependencies"
+echo "### [1/4] Installing dependencies"
 pip install -r requirements.txt
-pip install -r tools/requirements.txt
+pip install -r quality/requirements.txt
 
-echo "### [2/5] Django: migrate"
+echo "### [2/4] Django: check + migrate"
+python manage.py check
 python manage.py migrate --noinput
 
-echo "### [3/5] Django: test"
-python manage.py test
+echo "### [3/4] Django: test"
+python manage.py test catalog
 
-echo "### [4/5] tools/: official per-tool checks"
-bash tools/run_all.sh
-
-echo "### [5/5] tools/: analysis against the real Django app"
-bash tools/run_on_project.sh
+echo "### [4/4] Triggering every tool in quality/ against catalog/"
+for dir in quality/*/; do
+    name="$(basename "$dir")"
+    [ -f "$dir/trigger.yaml" ] || continue
+    cmd=$(grep -A1 '^run:' "$dir/trigger.yaml" | grep 'command:' | sed -E 's/.*command: *"(.*)"/\1/')
+    [ -z "$cmd" ] && continue
+    echo "=== $name: $cmd ==="
+    eval "$cmd"
+    echo
+done
 
 echo "### BUILD OK"

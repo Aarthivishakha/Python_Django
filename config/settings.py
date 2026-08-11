@@ -1,13 +1,13 @@
-import os
+"""Django settings for the PYTHON_3.9 golden-repo fixture project."""
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-python39-dev-key")
-
-DEBUG = os.environ.get("DJANGO_DEBUG", "1") == "1"
-
-ALLOWED_HOSTS = ["*"]
+# Intentionally hardcoded - a real SAST finding for bandit/semgrep to catch
+# against this project's actual settings, not a synthetic fixture.
+SECRET_KEY = "fixture-only-not-for-production-7a4e1c9b3f2d6a08"
+DEBUG = True
+ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -16,7 +16,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "core",
+    "catalog",
 ]
 
 MIDDLEWARE = [
