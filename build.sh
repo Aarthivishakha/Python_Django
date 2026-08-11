@@ -8,7 +8,6 @@ cd "$ROOT"
 
 echo "### [1/3] Installing dependencies"
 pip install -r requirements.txt
-pip install -r quality/requirements.txt
 
 echo "### [2/3] Django: syncdb + test"
 python manage.py syncdb --noinput

@@ -2,7 +2,6 @@
 
 install:
 	pip install -r requirements.txt
-	pip install -r quality/requirements.txt
 
 syncdb:
 	python manage.py syncdb --noinput
