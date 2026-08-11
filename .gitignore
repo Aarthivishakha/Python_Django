@@ -4,6 +4,3 @@ db.sqlite3
 .venv/
 venv/
 *.egg-info/
-.cosmic-ray*
-session.sqlite
-.testmondata
