@@ -1,0 +1,21 @@
+tool: pydriller
+version: "2.9"
+language: python
+language_version: "2.6"
+technique: "Development Process Analysis"
+classification: "Code Churn"
+target_files:
+  - ../../catalog/management/commands/mine_history.py
+run:
+  command: "python manage.py mine_history --max-commits 200"
+requirements:
+  - pydriller>=2.9
+notes: >
+  Implemented as a real Django management command
+  (python manage.py mine_history), pydriller's actual trigger source
+  since it reads this repo's own git log directly. Modern pydriller
+  releases require Python 3.6+ to install, so running this exact
+  command needs Python 3 even though the app code it ships alongside
+  targets 2.6 - included per request, with that caveat noted.
+expects:
+  churn_report_generated: true

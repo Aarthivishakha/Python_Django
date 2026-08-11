@@ -1,0 +1,17 @@
+tool: testmon
+version: "pytest-testmon 2.2.0"
+language: python
+language_version: "2.6"
+technique: "Test Prioritization"
+classification: "QA Resource Allocation"
+target_files:
+  - ../../catalog/pricing.py
+  - ../../catalog/tests.py
+run:
+  command: "pytest --testmon catalog/tests.py"
+requirements:
+  - pytest-testmon==2.2.0
+  - pytest-django>=3.0
+notes: "pytest/testmon are Python 3-only; requires pytest-django to collect Django TestCase classes from catalog/tests.py."
+expects:
+  selective_rerun_recorded: true

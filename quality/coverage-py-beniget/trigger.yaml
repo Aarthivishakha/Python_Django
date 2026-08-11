@@ -1,0 +1,22 @@
+tool: "coverage.py+beniget"
+version: "coverage 7.14.1 / beniget 0.5.0"
+language: python
+language_version: "2.6"
+technique: "Control Flow Testing + Data Flow Testing"
+classification: "Coverage Reporting Validation"
+target_files:
+  - ../../catalog/pricing.py
+  - ../../catalog/tests.py
+run:
+  command: "coverage run --branch manage.py test catalog && coverage report -m && python quality/beniget/run_beniget.py"
+requirements:
+  - coverage==7.14.1
+  - beniget==0.5.0
+  - gast>=0.5.0
+notes: >
+  Combines branch coverage (via manage.py test catalog, Django 1.5's
+  own runner) and dead-def detection against the real
+  catalog/pricing.py. Both tools require Python 3 to run themselves.
+expects:
+  branch_coverage_report_generated: true
+  dead_def_report_generated: true

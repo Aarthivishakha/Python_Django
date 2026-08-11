@@ -1,0 +1,18 @@
+tool: complexipy
+version: "cognitive-ast"
+language: python
+language_version: "2.6"
+technique: "Readability / Maintainability"
+classification: "Cognitive Complexity"
+target_files:
+  - ../../catalog/pricing.py
+run:
+  command: "complexipy catalog/pricing.py"
+requirements:
+  - complexipy>=1.0.0
+notes: >
+  complexipy is a Python 3-only tool (its own package requires
+  Python 3.8+); it parses catalog/pricing.py's AST without executing
+  it, so it can still analyze this Python 2.6-targeted source.
+expects:
+  cognitive_complexity_score_reported: true

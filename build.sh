@@ -2,15 +2,13 @@
 # Single build entry point: installs deps, builds/tests the real Django
 # project (catalog/), then triggers every tool in quality/ against that
 # same real project code. Exits non-zero on any failure.
-#
-# Django 1.5 predates the migrations framework (added in 1.7), so this
-# uses `manage.py syncdb`, not `manage.py migrate`.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 cd "$ROOT"
 
 echo "### [1/3] Installing dependencies"
 pip install -r requirements.txt
+pip install -r quality/requirements.txt
 
 echo "### [2/3] Django: syncdb + test"
 python manage.py syncdb --noinput

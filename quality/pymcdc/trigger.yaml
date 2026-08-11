@@ -1,0 +1,21 @@
+tool: pymcdc
+version: "0.2.5"
+language: python
+language_version: "2.6"
+technique: "Condition Coverage"
+classification: "Logical Sub-expression Validation"
+target_files:
+  - ../../catalog/pricing.py
+  - ../../catalog/tests.py
+run:
+  command: "python -m pymcdc --unittest catalog.tests catalog/pricing.py"
+requirements:
+  - pymcdc==0.2.5
+notes: >
+  Points at catalog.tests (the single-file test module used on this
+  Django 1.5 branch, not a tests/test_pricing.py submodule). pymcdc is
+  Python 3-only and imports the target module directly, so it needs
+  catalog/pricing.py to be importable under the Python 3 interpreter
+  running pymcdc, not the Python 2.6 interpreter the app itself targets.
+expects:
+  mcdc_requirements_covered: true

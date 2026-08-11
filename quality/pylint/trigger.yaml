@@ -1,0 +1,19 @@
+tool: pylint
+version: "4.0.6"
+language: python
+language_version: "2.6"
+technique: "Static Code Analysis"
+classification: "Lint / Rule Violations"
+target_files:
+  - ../../catalog
+run:
+  command: "pylint catalog --output-format=json"
+requirements:
+  - pylint==4.0.6
+notes: >
+  Modern pylint (4.x) is Python 3.9+ only, and it no longer understands
+  Python 2 syntax at all - if any code here used actual Python
+  2-only syntax (print statement, etc.) pylint 4.x would fail to parse
+  it. catalog/ happens to avoid such syntax, so this still runs.
+expects:
+  violations_detected: true

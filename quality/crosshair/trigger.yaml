@@ -1,0 +1,22 @@
+tool: crosshair
+version: "0.0.109"
+language: python
+language_version: "2.6"
+technique: "Static Analysis Metric"
+classification: "Execution Path Integrity"
+target_files:
+  - ../../catalog/pricing.py
+run:
+  command: "crosshair check catalog/pricing.py"
+requirements:
+  - crosshair-tool>=0.0.109
+notes: >
+  crosshair-tool is Python 3.8+ only and symbolically executes the
+  target function in-process, so it needs catalog/pricing.py to be
+  importable under whatever Python 3 interpreter runs crosshair itself
+  - a genuine limitation for a Python 2.6-targeted module, since
+  crosshair can't literally execute Python 2-only syntax if any
+  existed here (this module happens to avoid it). Included per request
+  with that caveat noted.
+expects:
+  contracts_verified: true

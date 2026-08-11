@@ -1,0 +1,19 @@
+tool: "radon+lizard"
+version: "radon 6.0.1 / lizard 1.17.10"
+language: python
+language_version: "2.6"
+technique: "Structural Analysis Metric"
+classification: "Cyclomatic Complexity"
+target_files:
+  - ../../catalog/pricing.py
+run:
+  command: "radon cc catalog/pricing.py -s -a && lizard catalog/pricing.py"
+requirements:
+  - radon==6.0.1
+  - lizard==1.17.10
+notes: >
+  radon/lizard parse catalog/pricing.py's AST rather than executing it,
+  so version-mismatch between the tool's own Python 3 runtime and the
+  target's Python 2.6 syntax isn't an issue for this simple module.
+expects:
+  cyclomatic_complexity_gt_1: true

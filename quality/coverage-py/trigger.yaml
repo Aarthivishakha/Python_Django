@@ -1,0 +1,22 @@
+tool: coverage.py
+version: "7.14.1"
+language: python
+language_version: "2.6"
+technique: "Control Flow Testing"
+classification: "Statement / Branch Coverage"
+target_files:
+  - ../../catalog/pricing.py
+  - ../../catalog/tests.py
+run:
+  command: "coverage run --branch manage.py test catalog && coverage report -m"
+requirements:
+  - coverage==7.14.1
+notes: >
+  Wraps `manage.py test catalog` (Django 1.5's own runner over
+  catalog/tests.py) rather than pytest, since there's no
+  tests/test_pricing.py submodule on this branch. Modern coverage.py
+  requires Python 3.9+ to install as the coverage-measuring process,
+  but the process it wraps (manage.py) still needs a real Python 2.6
+  interpreter to actually run this Django 1.5 app.
+expects:
+  statement_and_branch_coverage_report_generated: true
