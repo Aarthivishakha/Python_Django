@@ -7,5 +7,5 @@ class Product(models.Model):
     in_stock = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self) -> str:
+    def __unicode__(self):
         return self.name

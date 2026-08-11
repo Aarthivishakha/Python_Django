@@ -1,6 +1,7 @@
-Django>=5.1,<5.2
+Django==1.5.12
 # Intentionally pinned to an old release with published CVEs (e.g.
 # CVE-2015-2296, CVE-2018-18074) - a real dependency of
-# catalog/integrations.py, not a decorative pin, and what gives pip-audit
-# something genuine to find against this project's actual dependencies.
+# catalog/integrations.py, not a decorative pin, and what gives a
+# dependency-scanning tool something genuine to find against this
+# project's actual dependencies.
 requests==2.6.0

@@ -1,11 +1,10 @@
-.PHONY: install migrate test build
+.PHONY: install syncdb test build
 
 install:
 	pip install -r requirements.txt
-	pip install -r quality/requirements.txt
 
-migrate:
-	python manage.py migrate --noinput
+syncdb:
+	python manage.py syncdb --noinput
 
 test:
 	python manage.py test catalog

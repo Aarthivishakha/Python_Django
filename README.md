@@ -1,40 +1,40 @@
 # Django_python
 
-Python/Django project repository — `PYTHON_3.13` branch.
+Python/Django project repository — `PYTHON_2.6` branch.
 
-One real, buildable Django project, not a project + a parallel demo
-folder. Every analysis tool triggers against the actual project source,
-and the code uses Python 3.13 syntax where it fits naturally.
+One real, buildable Django project (not a project + a parallel demo
+folder), written in genuine Python 2.6 / Django 1.5 style — the last
+Django release to support Python 2.6.
 
-## Python 3.13 syntax used
+## Python 2.6 / Django 1.5 era details
 
-- `catalog/pricing.py::classify_order_size` is a `match` statement
-  (PEP 634).
-- `calculate_order_total`'s `coupon_code` parameter uses the PEP 604
-  `str | None` union syntax directly.
-- `OrderQuote.from_request` is a classmethod returning `typing.Self`
-  (PEP 673).
-- `type Cents = int` is a PEP 695 `type` alias statement (3.12+).
-- `QuoteCache[T = OrderQuote]` uses a PEP 696 generic type-parameter
-  default (new in 3.13) — `QuoteCache()` with no explicit type argument
-  defaults to caching `OrderQuote` instances, which is exactly how
-  `views.py::quote` uses it as a real per-request quote cache.
+- No f-strings, type-hint syntax, or `__str__`-only convention (all
+  Python 3 only) - `%`-style formatting and `__unicode__` are used
+  instead, matching how Django itself worked at the time.
+- No set/dict comprehensions (added in Python 2.7) anywhere in
+  `catalog/`.
+- Django 1.5 predates `AppConfig` (added in 1.7), the migrations
+  framework (added in 1.7), and `DiscoverRunner`-based test packages
+  (default from 1.6) - so there's no `catalog/apps.py`, no
+  `catalog/migrations/`, and tests live in a single `catalog/tests.py`
+  rather than a `tests/` package. The database is set up with
+  `manage.py syncdb`, not `manage.py migrate`.
+- `config/urls.py` and `catalog/urls.py` use the era's
+  `django.conf.urls.patterns()` + regex `url()` routing (removed in
+  Django 1.10, long before `path()` existed in 2.0).
+- `config/settings.py` uses `MIDDLEWARE_CLASSES` (renamed to
+  `MIDDLEWARE` in 1.10) and `TEMPLATE_DIRS` (superseded by the
+  `TEMPLATES` dict in 1.8).
 
 ## Layout
 
 - `catalog/` — the real Django app (`pricing.py`, `admin.py`/`exports.py`
-  duplication for jscpd-style tools, `integrations.py` + an old `requests`
-  pin for pip-audit, a deliberately partial `tests/` suite).
-- `config/settings.py` has a hardcoded `SECRET_KEY` — a real SAST finding.
-- `quality/<tool>/` — one folder per tool available for Python 3.13 in
-  [Golden_Repo_Lite](https://github.com/testable-platform/Golden_Repo_Lite/tree/python/Python_3.13)
-  (9 total — swaps `cognitive-ast` for `crosshair` versus the 3.12 set,
-  matching that repo's Python_3.13 tool set exactly; still no `jscpd`,
-  `beniget`, `radon-lizard`, or `pydriller` standalone folders on this
-  branch): `cosmic-ray`, `coverage-py`, `coverage-py-beniget`,
-  `crosshair`, `pip-audit`, `pylint`, `pymcdc`, `semgrep-bandit`,
-  `testmon`. Each holds `trigger.yaml` + `README.md` pointing at the
-  real project code above.
+  duplication for jscpd, `integrations.py` + an old `requests` pin,
+  `tests.py`).
+- `quality/jscpd/` — the one tool available for Python 2.6 in
+  [Golden_Repo_Lite](https://github.com/testable-platform/Golden_Repo_Lite/tree/python/Python_2.6)
+  (that repo's Python_2.6 folder has only `jscpd`). `trigger.yaml` +
+  `README.md` point it at the real `admin.py`/`exports.py` duplication.
 
 ## Build everything with one command
 
@@ -43,18 +43,19 @@ bash build.sh
 # or: make build
 ```
 
-Installs both dependency sets, runs `manage.py check` + `migrate` +
-`test catalog`, then triggers every tool in `quality/` against the real
-`catalog/` code. Non-zero exit on any failure.
+Installs dependencies, runs `manage.py syncdb` + `test catalog`, then
+triggers `jscpd` against the real duplicated code. Non-zero exit on any
+failure. Requires an actual Python 2.6 interpreter and Node.js (`npx`)
+for jscpd - **GitHub-hosted Actions runners can no longer provision
+Python 2.6**, so `.github/workflows/build.yml` is included for branch
+consistency but will likely fail to set up its Python step there; run
+`build.sh` locally under real Python 2.6 instead.
 
 ## Running things individually
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-pip install -r quality/requirements.txt
-
-python manage.py migrate
-python manage.py runserver       # app at http://127.0.0.1:8000/catalog/products/
+python manage.py syncdb
+python manage.py runserver        # app at http://127.0.0.1:8000/catalog/products/
+npx jscpd --config .jscpd.json
 ```
