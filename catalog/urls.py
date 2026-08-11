@@ -1,9 +1,9 @@
-from django.urls import path
+from django.conf.urls import url
 
-from . import views
+from catalog import views
 
 urlpatterns = [
-    path("products/", views.product_list, name="product-list"),
-    path("products/export/", views.product_export, name="product-export"),
-    path("quote/", views.quote, name="quote"),
+    url(r'^products/$', views.product_list, name='product-list'),
+    url(r'^products/export/$', views.product_export, name='product-export'),
+    url(r'^quote/$', views.quote, name='quote'),
 ]

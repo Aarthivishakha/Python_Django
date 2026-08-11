@@ -2,15 +2,12 @@
 fixture: views.py calls into this module for actual request handling, and
 the analysis tools under quality/ point at it directly.
 
-Uses Python 3.13 syntax: a `match` statement (PEP 634), `typing.Self`
-(PEP 673), a PEP 695 `type` alias statement, and a PEP 696 generic type
-parameter default (new in 3.13) on QuoteCache, so QuoteCache[] without an
-explicit argument defaults to caching OrderQuote instances.
+Written for Python 3.5: no f-strings or variable annotations (both
+added in 3.6), but the `typing` module - introduced exactly in 3.5 - is
+available, so calculate_order_total's optional coupon_code parameter
+carries a real typing.Optional[str] annotation.
 """
-from dataclasses import dataclass
-from typing import Self
-
-type Cents = int
+from typing import Optional
 
 MEMBER_DISCOUNT_PCT = 10
 COUPON_DISCOUNT_PCT = 15
@@ -18,30 +15,21 @@ BULK_THRESHOLD = 10
 BULK_DISCOUNT_PCT = 5
 
 
-def calculate_order_total(
-    quantity: int,
-    unit_price_cents: Cents,
-    is_member: bool,
-    has_coupon: bool,
-    is_bulk_eligible: bool,
-    coupon_code: str | None = None,
-) -> Cents:
+def calculate_order_total(quantity, unit_price_cents, is_member, has_coupon,
+                           is_bulk_eligible, coupon_code=None):
+    # type: (int, int, bool, bool, bool, Optional[str]) -> int
     """Compute an order total in cents.
 
     Four independent boolean inputs (membership, coupon, bulk eligibility,
     and the bulk quantity threshold) combine into the discount decision -
-    a genuine target for MC/DC and mutation testing.
-
-    pre: quantity > 0
-    pre: unit_price_cents >= 0
-    post: __return__ >= 0
+    a genuine target for mutation-style testing.
     """
     if quantity <= 0:
-        raise ValueError(f"quantity must be positive, got {quantity}")
+        raise ValueError('quantity must be positive, got %r' % quantity)
     if unit_price_cents < 0:
-        raise ValueError(f"unit_price_cents must be non-negative, got {unit_price_cents}")
+        raise ValueError('unit_price_cents must be non-negative, got %r' % unit_price_cents)
     if has_coupon and coupon_code is None:
-        raise ValueError("coupon_code is required when has_coupon is True")
+        raise ValueError('coupon_code is required when has_coupon is True')
 
     subtotal = quantity * unit_price_cents
 
@@ -60,64 +48,19 @@ def calculate_order_total(
     return subtotal - discount
 
 
-def classify_order_size(quantity: int) -> str:
-    """Cyclomatic-complexity target for radon/lizard/cognitive-ast.
+def classify_order_size(quantity):
+    # type: (int) -> str
+    """Structural-complexity target for duplication/complexity tools.
 
-    Each branch is a real order-size tier a fulfillment system would need.
+    Plain if/elif - Python 3.5 has no match statement (added in 3.10).
     """
-    match quantity:
-        case q if q <= 0:
-            return "invalid"
-        case q if q < 5:
-            return "small"
-        case q if q < BULK_THRESHOLD:
-            return "medium"
-        case q if q < 100:
-            return "bulk"
-        case _:
-            return "wholesale"
-
-
-@dataclass
-class OrderQuote:
-    """Bundles a computed total with its size tier for the quote endpoint.
-
-    from_request is a classmethod returning Self (PEP 673), so a future
-    subclass would get back its own type, not a hardcoded OrderQuote.
-    """
-
-    total_cents: Cents
-    size_tier: str
-
-    @classmethod
-    def from_request(
-        cls,
-        quantity: int,
-        unit_price_cents: Cents,
-        is_member: bool,
-        has_coupon: bool,
-        is_bulk_eligible: bool,
-        coupon_code: str | None = None,
-    ) -> Self:
-        total = calculate_order_total(
-            quantity, unit_price_cents, is_member, has_coupon, is_bulk_eligible, coupon_code
-        )
-        return cls(total_cents=total, size_tier=classify_order_size(quantity))
-
-
-class QuoteCache[T = OrderQuote]:
-    """A tiny in-memory cache, generic over the value type it stores.
-
-    Written with a PEP 696 default type parameter (new in 3.13):
-    QuoteCache() without an explicit type argument defaults to caching
-    OrderQuote instances, which is how the quote view actually uses it.
-    """
-
-    def __init__(self) -> None:
-        self._items: dict[str, T] = {}
-
-    def get(self, key: str) -> T | None:
-        return self._items.get(key)
-
-    def set(self, key: str, value: T) -> None:
-        self._items[key] = value
+    if quantity <= 0:
+        return 'invalid'
+    elif quantity < 5:
+        return 'small'
+    elif quantity < BULK_THRESHOLD:
+        return 'medium'
+    elif quantity < 100:
+        return 'bulk'
+    else:
+        return 'wholesale'

@@ -2,9 +2,9 @@ name: Build
 
 on:
   push:
-    branches: [PYTHON_3.13]
+    branches: [PYTHON_3.5]
   pull_request:
-    branches: [PYTHON_3.13]
+    branches: [PYTHON_3.5]
 
 jobs:
   build:
@@ -12,9 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Note: GitHub-hosted runners' setup-python tool cache does not
+      # go back to 3.5; this step will likely fail to provision there.
+      # Kept for branch consistency; run build.sh locally under a real
+      # Python 3.5 instead.
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.5"
 
       - name: Build
         run: bash build.sh
