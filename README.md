@@ -1,24 +1,20 @@
 # Django_python
 
-Python/Django project repository — `PYTHON_3.13` branch.
+Python/Django project repository — `PYTHON_3.16` branch.
 
 One real, buildable Django project, not a project + a parallel demo
 folder. Every analysis tool triggers against the actual project source,
-and the code uses Python 3.13 syntax where it fits naturally.
+and every analysis tool triggers against the actual project source.
 
-## Python 3.13 syntax used
+## Python syntax used
 
-- `catalog/pricing.py::classify_order_size` is a `match` statement
-  (PEP 634).
-- `calculate_order_total`'s `coupon_code` parameter uses the PEP 604
-  `str | None` union syntax directly.
-- `OrderQuote.from_request` is a classmethod returning `typing.Self`
-  (PEP 673).
-- `type Cents = int` is a PEP 695 `type` alias statement (3.12+).
-- `QuoteCache[T = OrderQuote]` uses a PEP 696 generic type-parameter
-  default (new in 3.13) — `QuoteCache()` with no explicit type argument
-  defaults to caching `OrderQuote` instances, which is exactly how
-  `views.py::quote` uses it as a real per-request quote cache.
+Carries forward every feature confirmed through 3.13 (`match` statement,
+PEP 604 unions, `typing.Self`, the PEP 695 `type` alias, and the PEP 696
+generic default on `QuoteCache`). This branch was built after this
+assistant's training cutoff, so no 3.14/3.15/3.16-specific language
+feature is claimed here with confidence - any such addition isn't
+reflected in this code and would need verifying against real release
+notes.
 
 ## Layout
 
@@ -26,15 +22,14 @@ and the code uses Python 3.13 syntax where it fits naturally.
   duplication for jscpd-style tools, `integrations.py` + an old `requests`
   pin for pip-audit, a deliberately partial `tests/` suite).
 - `config/settings.py` has a hardcoded `SECRET_KEY` — a real SAST finding.
-- `quality/<tool>/` — one folder per tool available for Python 3.13 in
-  [Golden_Repo_Lite](https://github.com/testable-platform/Golden_Repo_Lite/tree/python/Python_3.13)
-  (9 total — swaps `cognitive-ast` for `crosshair` versus the 3.12 set,
-  matching that repo's Python_3.13 tool set exactly; still no `jscpd`,
-  `beniget`, `radon-lizard`, or `pydriller` standalone folders on this
-  branch): `cosmic-ray`, `coverage-py`, `coverage-py-beniget`,
-  `crosshair`, `pip-audit`, `pylint`, `pymcdc`, `semgrep-bandit`,
-  `testmon`. Each holds `trigger.yaml` + `README.md` pointing at the
-  real project code above.
+- `quality/<tool>/` — all 14 tools from
+  [Golden_Repo_Lite](https://github.com/testable-platform/Golden_Repo_Lite/tree/python)
+  (not just the 2 - `coverage-py`, `coverage-py-beniget` - that repo's
+  own Python_3.16 folder lists): `beniget`,
+  `cognitive-ast`, `cosmic-ray`, `coverage-py`, `coverage-py-beniget`,
+  `crosshair`, `jscpd`, `pip-audit`, `pydriller`, `pylint`, `pymcdc`,
+  `radon-lizard`, `semgrep-bandit`, `testmon`. Each holds `trigger.yaml`
+  + `README.md` pointing at the real project code above.
 
 ## Build everything with one command
 
