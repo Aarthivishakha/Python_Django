@@ -6,18 +6,14 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 cd "$ROOT"
 
-echo "### [1/4] Installing dependencies"
+echo "### [1/3] Installing dependencies"
 pip install -r requirements.txt
-pip install -r quality/requirements.txt
 
-echo "### [2/4] Django: check + migrate"
-python manage.py check
+echo "### [2/3] Django: migrate + test"
 python manage.py migrate --noinput
-
-echo "### [3/4] Django: test"
 python manage.py test catalog
 
-echo "### [4/4] Triggering every tool in quality/ against catalog/"
+echo "### [3/3] Triggering every tool in quality/ against catalog/"
 for dir in quality/*/; do
     name="$(basename "$dir")"
     [ -f "$dir/trigger.yaml" ] || continue

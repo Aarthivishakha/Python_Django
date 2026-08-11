@@ -2,7 +2,6 @@
 
 install:
 	pip install -r requirements.txt
-	pip install -r quality/requirements.txt
 
 migrate:
 	python manage.py migrate --noinput

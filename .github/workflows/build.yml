@@ -2,9 +2,9 @@ name: Build
 
 on:
   push:
-    branches: [PYTHON_3.13]
+    branches: [PYTHON_2.7]
   pull_request:
-    branches: [PYTHON_3.13]
+    branches: [PYTHON_2.7]
 
 jobs:
   build:
@@ -12,9 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Note: GitHub-hosted runners can provision Python 2.7 via
+      # setup-python (it's the last 2.x line they still cache), but
+      # support is best-effort and may be dropped without notice.
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "2.7"
 
       - name: Build
         run: bash build.sh
