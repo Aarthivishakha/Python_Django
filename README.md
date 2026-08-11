@@ -26,15 +26,13 @@ and the code uses Python 3.13 syntax where it fits naturally.
   duplication for jscpd-style tools, `integrations.py` + an old `requests`
   pin for pip-audit, a deliberately partial `tests/` suite).
 - `config/settings.py` has a hardcoded `SECRET_KEY` — a real SAST finding.
-- `quality/<tool>/` — one folder per tool available for Python 3.13 in
-  [Golden_Repo_Lite](https://github.com/testable-platform/Golden_Repo_Lite/tree/python/Python_3.13)
-  (9 total — swaps `cognitive-ast` for `crosshair` versus the 3.12 set,
-  matching that repo's Python_3.13 tool set exactly; still no `jscpd`,
-  `beniget`, `radon-lizard`, or `pydriller` standalone folders on this
-  branch): `cosmic-ray`, `coverage-py`, `coverage-py-beniget`,
-  `crosshair`, `pip-audit`, `pylint`, `pymcdc`, `semgrep-bandit`,
-  `testmon`. Each holds `trigger.yaml` + `README.md` pointing at the
-  real project code above.
+- `quality/<tool>/` — all 14 tools from
+  [Golden_Repo_Lite](https://github.com/testable-platform/Golden_Repo_Lite/tree/python)
+  (not just the 9 that repo's own Python_3.13 folder lists): `beniget`,
+  `cognitive-ast`, `cosmic-ray`, `coverage-py`, `coverage-py-beniget`,
+  `crosshair`, `jscpd`, `pip-audit`, `pydriller`, `pylint`, `pymcdc`,
+  `radon-lizard`, `semgrep-bandit`, `testmon`. Each holds `trigger.yaml`
+  + `README.md` pointing at the real project code above.
 
 ## Build everything with one command
 

@@ -1,0 +1,20 @@
+tool: jscpd
+version: "4.2.5"
+language: python
+language_version: "3.13"
+technique: "Code Quality Auditing"
+classification: "Code Duplication Detection"
+target_files:
+  - ../../catalog/admin.py
+  - ../../catalog/exports.py
+run:
+  command: "npx jscpd --config .jscpd.json"
+thresholds:
+  min_lines: 3
+  min_tokens: 20
+expects:
+  duplicate_clone_detected: true
+notes: >
+  catalog/admin.py's export_selected_csv duplicates
+  catalog/exports.py's export_products_csv almost verbatim - a real
+  copy-paste, not a staged fixture.
