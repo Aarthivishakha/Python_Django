@@ -1,0 +1,20 @@
+tool: pymcdc
+version: "0.2.5"
+language: python
+language_version: "3.4"
+technique: "Condition Coverage"
+classification: "Logical Sub-expression Validation"
+target_files:
+  - ../../catalog/pricing.py
+  - ../../catalog/tests/test_pricing.py
+run:
+  command: "python -m pymcdc --unittest catalog.tests.test_pricing catalog/pricing.py"
+requirements:
+  - pymcdc==0.2.5
+expects:
+  mcdc_requirements_covered: true
+notes: >
+  calculate_order_total's `is_member and has_coupon` / bulk-eligibility
+  decision has 4 independent boolean inputs, a genuine MC/DC target -
+  and the deliberately partial test_pricing.py leaves some
+  sub-expression combinations (e.g. has_coupon alone) unexercised.
