@@ -1,0 +1,15 @@
+tool: "semgrep+bandit"
+version: "semgrep 1.172.0 / bandit 1.8.3"
+language: python
+language_version: "3.13"
+technique: "Security White-box Testing (SAST)"
+classification: "Secure Coding Validation"
+target_files:
+  - sast_fixture.py
+run:
+  command: "bash run_sast.sh"
+requirements:
+  - semgrep>=1.172.0
+  - bandit==1.8.3
+expects:
+  - findings_detected: true

@@ -1,0 +1,15 @@
+tool: pymcdc
+version: "0.2.5"
+language: python
+language_version: "3.14"
+technique: "Condition Coverage"
+classification: "Logical Sub-expression Validation"
+target_files:
+  - mcdc_decision.py
+  - test_mcdc_decision.py
+run:
+  command: "bash run_pymcdc.sh"
+requirements:
+  - pymcdc==0.2.5
+expects:
+  - mcdc_requirements_covered: true

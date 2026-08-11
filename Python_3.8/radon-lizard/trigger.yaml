@@ -1,0 +1,15 @@
+tool: "radon+lizard"
+version: "radon 6.0.1 / lizard 1.17.10"
+language: python
+language_version: "3.8"
+technique: "Structural Analysis Metric"
+classification: "Cyclomatic Complexity"
+target_files:
+  - complexity_sample.py
+run:
+  command: "bash run_radon_lizard.sh"
+requirements:
+  - radon==6.0.1
+  - lizard==1.17.10
+expects:
+  - cyclomatic_complexity_gt_1: true

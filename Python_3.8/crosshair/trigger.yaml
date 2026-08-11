@@ -1,0 +1,14 @@
+tool: crosshair
+version: "0.0.109"
+language: python
+language_version: "3.8"
+technique: "Static Analysis Metric"
+classification: "Execution Path Integrity"
+target_files:
+  - contract_examples.py
+run:
+  command: "bash run_crosshair.sh"
+requirements:
+  - crosshair-tool>=0.0.109
+expects:
+  - contracts_verified: true

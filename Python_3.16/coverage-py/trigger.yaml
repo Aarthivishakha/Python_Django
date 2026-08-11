@@ -1,0 +1,16 @@
+tool: coverage.py
+version: "7.14.1"
+language: python
+language_version: "3.16"
+technique: "Control Flow Testing"
+classification: "Statement / Branch Coverage"
+target_files:
+  - calculator.py
+  - test_calculator.py
+run:
+  command: "bash run_coverage.sh"
+requirements:
+  - coverage==7.14.1
+  - pytest-cov>=6.1.0
+expects:
+  - statement_and_branch_coverage_report_generated: true

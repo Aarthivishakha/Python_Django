@@ -1,0 +1,16 @@
+tool: jscpd
+version: "4.2.5"
+language: python
+language_version: "3.6"
+technique: "Code Quality Auditing"
+classification: "Code Duplication Detection"
+target_files:
+  - retail_order_processor.py
+  - wholesale_order_processor.py
+run:
+  command: "bash run_jscpd.sh"
+thresholds:
+  min_lines: 5
+  min_tokens: 50
+expects:
+  - duplicate_clone_detected: true
