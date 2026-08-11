@@ -1,0 +1,15 @@
+tool: beniget
+version: "0.5.0"
+language: python
+language_version: "3.10"
+technique: "Data Flow Testing"
+classification: "All-Defs / All-Uses Coverage"
+target_files:
+  - ../../catalog/pricing.py
+run:
+  command: "python quality/beniget/run_beniget.py"
+requirements:
+  - beniget==0.5.0
+  - gast>=0.5.0
+expects:
+  dead_defs_report_generated: true
