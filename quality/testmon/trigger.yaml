@@ -1,0 +1,15 @@
+tool: testmon
+version: "pytest-testmon 2.2.0"
+language: python
+language_version: "3.5"
+technique: "Test Prioritization"
+classification: "QA Resource Allocation"
+target_files:
+  - ../../catalog/pricing.py
+  - ../../catalog/tests/test_pricing.py
+run:
+  command: "pytest --testmon catalog/tests/test_pricing.py"
+requirements:
+  - pytest-testmon==2.2.0
+expects:
+  selective_rerun_recorded: true
