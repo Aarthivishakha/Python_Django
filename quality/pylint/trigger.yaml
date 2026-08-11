@@ -1,0 +1,14 @@
+tool: pylint
+version: "4.0.6"
+language: python
+language_version: "3.6"
+technique: "Static Code Analysis"
+classification: "Lint / Rule Violations"
+target_files:
+  - ../../catalog
+run:
+  command: "pylint catalog --output-format=json"
+requirements:
+  - pylint==4.0.6
+expects:
+  violations_detected: true

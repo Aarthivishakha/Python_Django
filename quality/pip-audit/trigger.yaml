@@ -1,0 +1,17 @@
+tool: pip-audit
+version: "2.10.1"
+language: python
+language_version: "3.6"
+technique: "Dependency Risk (SCA)"
+classification: "Vulnerability Dependency Detection"
+target_files:
+  - ../../requirements.txt
+run:
+  command: "pip-audit -r requirements.txt --format json"
+requirements:
+  - pip-audit==2.10.1
+expects:
+  known_cve_count_gt_0: true
+notes: >
+  requirements.txt pins requests==2.6.0, a real dependency of
+  catalog/integrations.py with published CVEs.
