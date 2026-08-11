@@ -1,0 +1,1 @@
+{"minLines": 3, "minTokens": 20, "reporters": ["console", "json"], "path": ["catalog"]}

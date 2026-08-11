@@ -1,7 +1,7 @@
 tool: pymcdc
 version: "0.2.5"
 language: python
-language_version: "3.13"
+language_version: "3.15"
 technique: "Condition Coverage"
 classification: "Logical Sub-expression Validation"
 target_files:

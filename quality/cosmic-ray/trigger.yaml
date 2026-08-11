@@ -1,7 +1,7 @@
 tool: cosmic-ray
 version: "8.4.6"
 language: python
-language_version: "3.13"
+language_version: "3.15"
 technique: "Mutation Testing"
 classification: "Mutation Score"
 target_files:
